@@ -11,19 +11,19 @@ public class Main {
 	private static Usuario[] usuarios = new Usuario[10];
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
+		Scanner sn = new Scanner(System.in);
 		boolean flag = true;
 		inicializarDatos();
 		while (flag) {
-			System.out.println("\nSeleccione una opción:");
+			System.out.println("\nSeleccione una opcion:");
 			System.out.println("1. Mostrar libros");
 			System.out.println("2. Agregar libro");
 			System.out.println("3. Eliminar libro");
 			System.out.println("4. Prestar libro");
 			System.out.println("5. Devolver libro");
 			System.out.println("6. Salir");
-			int opcion = scanner.nextInt();
-			scanner.nextLine();
+			int opcion = sn.nextInt();
+			sn.nextLine();
 
 			switch (opcion) {
 			case 1:
@@ -31,42 +31,42 @@ public class Main {
 				break;
 			case 2:
 				System.out.println("Ingrese el ID del libro:");
-				int id = scanner.nextInt();
+				int id = sn.nextInt();
 				scanner.nextLine();
-				System.out.println("Ingrese el título del libro:");
-				String titulo = scanner.nextLine();
+				System.out.println("Ingrese el titulo del libro:");
+				String titulo = sn.nextLine();
 				System.out.println("Ingrese el autor del libro:");
-				String autor = scanner.nextLine();
-				System.out.println("Ingrese la fecha de publicación (YYYY-MM-DD):");
-				String fecha = scanner.nextLine();
+				String autor = sn.nextLine();
+				System.out.println("Ingrese la fecha de publicacion (YYYY-MM-DD):");
+				String fecha = sn.nextLine();
 				LocalDate anioPublicacion = LocalDate.parse(fecha);
 				Libro libroNuevo = new Libro(id, titulo, autor, anioPublicacion);
 				agregarLibro(libroNuevo);
 				break;
 			case 3:
 				System.out.println("Ingrese el ID del libro a eliminar:");
-				int idEliminar = scanner.nextInt();
+				int idEliminar = sn.nextInt();
 				eliminarLibro(idEliminar);
 				break;
 			case 4:
 				System.out.println("Ingrese el ID del libro a prestar:");
-				int idPrestar = scanner.nextInt();
-				System.out.println("Ingrese el código de usuario:");
-				int codigoUsuario = scanner.nextInt();
-				System.out.println("Ingrese la fecha de préstamo (YYYY-MM-DD):");
-				scanner.nextLine();
-				String fechaPrestamo = scanner.nextLine();
+				int idPrestar = sn.nextInt();
+				System.out.println("Ingrese el codigo de usuario:");
+				int codigoUsuario = sn.nextInt();
+				System.out.println("Ingrese la fecha de prestamo (YYYY-MM-DD):");
+				sn.nextLine();
+				String fechaPrestamo = sn.nextLine();
 				LocalDate fechaPrestamoLocal = LocalDate.parse(fechaPrestamo);
 				prestarLibro(idPrestar, codigoUsuario, fechaPrestamoLocal);
 				break;
 			case 5:
 				System.out.println("Ingrese el ID del libro a devolver:");
-				int idDevolver = scanner.nextInt();
-				System.out.println("Ingrese el código de usuario:");
-				int codigoUsuarioDevolver = scanner.nextInt();
-				System.out.println("Ingrese la fecha de devolución (YYYY-MM-DD):");
-				scanner.nextLine();
-				String fechaDevolucion = scanner.nextLine();
+				int idDevolver = sn.nextInt();
+				System.out.println("Ingrese el codigo de usuario:");
+				int codigoUsuarioDevolver = sn.nextInt();
+				System.out.println("Ingrese la fecha de devolucion (YYYY-MM-DD):");
+				sn.nextLine();
+				String fechaDevolucion = sn.nextLine();
 				LocalDate fechaDevolucionLocal = LocalDate.parse(fechaDevolucion);
 				devolverLibro(idDevolver, codigoUsuarioDevolver, fechaDevolucionLocal);
 				break;
@@ -74,7 +74,7 @@ public class Main {
 				System.out.println("Saliendo...");
 				flag = false;
 			default:
-				System.out.println("Opción no válida. Intente de nuevo.");
+				System.err.println("Opción no válida. Intente de nuevo.");
 			}
 		}
 	}
@@ -98,7 +98,7 @@ public class Main {
 		System.out.println("Lista de libros disponibles:");
 		for (int i = 0; i < biblioteca.length; i++) {
 			if (biblioteca[i] != null) {
-				System.out.println("ID: " + biblioteca[i].getId() + ", Título: " + biblioteca[i].getTitulo()
+				System.out.println("ID: " + biblioteca[i].getId() + ", Titulo: " + biblioteca[i].getTitulo()
 						+ ", Autor: " + biblioteca[i].getAutor() + ", Disponible: " + biblioteca[i].isDisponible());
 			}
 		}
@@ -118,7 +118,7 @@ public class Main {
 		}
 
 		if (seguro) {
-			System.out.println("No hay espacio en la biblioteca para agregar más libros.");
+			System.err.println("No hay espacio en la biblioteca para agregar más libros.");
 		}
 	}
 
@@ -136,7 +136,7 @@ public class Main {
 		}
 
 		if (seguro) {
-			System.out.println("No se encontró el libro con el ID " + id);
+			System.err.println("No se encontro el libro con el ID " + id);
 		}
 	}
 
@@ -164,15 +164,15 @@ public class Main {
 		}
 
 		if (libro == null) {
-			System.out.println("Libro no encontrado.");
+			System.err.println("Libro no encontrado.");
 		} else if (usuario == null) {
-			System.out.println("Usuario no encontrado.");
+			System.err.println("Usuario no encontrado.");
 		} else {
 			if (libro.prestarLibro(usuario, fechaPrestamo)) {
-				System.out.println("El libro ha sido prestado con éxito.");
+				System.out.println("El libro ha sido prestado con exito.");
 			} else {
-				System.out.println(
-						"No se pudo prestar el libro. Verifique que no esté multado y que no tenga más de tres libros prestados.");
+				System.err.println(
+						"No se pudo prestar el libro. Mire si no esta multado y que no tenie mas o tres libros ya prestados.");
 			}
 		}
 	}
