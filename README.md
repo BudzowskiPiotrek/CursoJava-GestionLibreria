@@ -8,7 +8,7 @@ una fecha calculada de 15 días a contar desde la fechaPrestamo).
 
 • Crea la clase usuario que recogerá código (que debe ser único), nombre, array de tres libros que es el máximo de
 libros que debe de tener un usuario en préstamo y un atributo multado o no. Cuando un usuario entrega un libro
-posterior a la fecha de préstamo deberá permanecer multado durante 10 días a contar desde la fecha, Establece los
+posterior a la fecha de préstamo deberá permanecer multado, Establece los
 parámetros que consideres apropiados para llevar a cabo esta restricción.
 
 • Todos los libros comienzan como disponibles cuando se crean, implementa métodos para prestar que además calcule
