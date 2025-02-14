@@ -1,12 +1,19 @@
 package gestion.libreria;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Usuario {
+	
+	// VARIABLES DE CLASE USUARIO
+	
 	private String nombre;
 	private Libro[] libros;
 	private boolean multado;
 	private int codigoUsuario;
 	public static int contador = 0;
 
+	// CONSTRUCTOR DE LA CLASE
+	
 	public Usuario(String nombre) {
 		this.nombre = nombre;
 		this.libros = new Libro[3];
@@ -14,6 +21,8 @@ public class Usuario {
 		this.codigoUsuario = ++contador;
 	}
 
+	// LOS GETER Y LOS SETER
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -30,7 +39,22 @@ public class Usuario {
 		this.libros = libros;
 	}
 
+	
+	// DENTRO DE GETER DE MULTADO CREAMOS METODO DE CONTROL DE MULTADO PARA QUE ESTE MULTADO 10 DIAS
+	
 	public boolean isMultado() {
+		boolean seguro = true;
+		if (multado) {
+			for (int i = 0; i < libros.length && seguro; i++) {
+				if (libros[i] != null) {
+					long diasDesdeDevolucion = ChronoUnit.DAYS.between(libros[i].getFechaDevolución(), LocalDate.now());
+					if (diasDesdeDevolucion >= 10) {
+						multado = false;
+						seguro = false;
+					}
+				}
+			}
+		}
 		return multado;
 	}
 
@@ -54,9 +78,11 @@ public class Usuario {
 		Usuario.contador = contador;
 	}
 
+	// METODO DE AGREGAR LIBRO 
+	
 	public boolean agregarLibro(Libro libro) {
 		boolean exito = false, seguro = true;
-		for (int i = 0; i < libros.length & seguro; i++) {
+		for (int i = 0; i < libros.length && seguro; i++) {
 			if (libros[i] == null) {
 				libros[i] = libro;
 				exito = true;
@@ -66,6 +92,8 @@ public class Usuario {
 		return exito;
 	}
 
+	// METODO PARA BORRAR LIBRO
+	
 	public boolean borrarLibro(Libro libro) {
 		boolean exito = false;
 		for (int i = 0; i < libros.length; i++) {
@@ -77,21 +105,24 @@ public class Usuario {
 		return exito;
 	}
 
-	public void multarUsuario(long diasFueraDePlazo) {
+	// METODO PARA CAMBIAR A MULTADO POR NO DEVOLVER EN LOS PLAZOS
+	
+	public void multarUsuario(LocalDate fechaDevolucionTardia) {
+		long diasFueraDePlazo = ChronoUnit.DAYS.between(fechaDevolucionTardia, LocalDate.now());
 		if (diasFueraDePlazo > 0) {
 			this.multado = true;
 		}
-
 	}
 
+	// METODO PARA CALCULAR LIBROS PRESTADOS
+	
 	public int numeroLibrosPrestados() {
 		int count = 0;
 		for (int i = 0; i < libros.length; i++) {
-			if (libros[i] == null) {
-				count += 1;
+			if (libros[i] != null) { 
+				count++;
 			}
 		}
 		return count;
 	}
-
 }
