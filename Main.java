@@ -32,7 +32,7 @@ public class Main {
 			case 2:
 				System.out.println("Ingrese el ID del libro:");
 				int id = sn.nextInt();
-				scanner.nextLine();
+				sn.nextLine();
 				System.out.println("Ingrese el titulo del libro:");
 				String titulo = sn.nextLine();
 				System.out.println("Ingrese el autor del libro:");
